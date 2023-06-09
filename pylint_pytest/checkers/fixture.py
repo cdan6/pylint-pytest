@@ -113,8 +113,8 @@ class FixtureChecker(BasePytestChecker):
         try:
             with open(os.devnull, 'w') as devnull:
                 # suppress any future output from pytest
-                stdout, stderr = sys.stdout, sys.stderr
-                sys.stderr = sys.stdout = devnull
+                # stdout, stderr = sys.stdout, sys.stderr
+                # sys.stderr = sys.stdout = devnull
 
                 # run pytest session with customized plugin to collect fixtures
                 fixture_collector = FixtureCollector()
@@ -137,9 +137,12 @@ class FixtureChecker(BasePytestChecker):
 
                 if (ret != pytest.ExitCode.OK or fixture_collector.errors) and is_test_module:
                     self.add_message('cannot-enumerate-pytest-fixtures', node=node)
+                    print(f"***Errors: {fixture_collector.errors}")
+
         finally:
             # restore output devices
-            sys.stdout, sys.stderr = stdout, stderr
+            # sys.stdout, sys.stderr = stdout, stderr
+            pass
 
     def visit_decorators(self, node):
         """
